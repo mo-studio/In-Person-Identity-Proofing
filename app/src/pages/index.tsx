@@ -5,8 +5,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { Grid, GridContainer } from "@trussworks/react-uswds";
 
-import SvgAccountBox from "../components/icons/AccountBox";
-import SvgEvent from "../components/icons/Event";
+import LoginButton from "src/components/auth/loginButton";
+import SvgAccountBox from "src/components/icons/AccountBox";
+import SvgEvent from "src/components/icons/Event";
 
 const svgStyle = {
   width: 50,
@@ -29,6 +30,12 @@ const Home: NextPage = () => {
                 <h1 className="padding-left-0">In-Person Identity Proofing</h1>
                 <p>v0.1.0</p>
               </div>
+            </Grid>
+          </Grid>
+
+          <Grid row>
+            <Grid tablet={{ col: true }} className="margin-bottom-4">
+              <LoginButton />
             </Grid>
           </Grid>
 
