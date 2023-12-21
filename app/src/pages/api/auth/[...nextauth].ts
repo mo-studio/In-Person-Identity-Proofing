@@ -19,7 +19,7 @@ export const authOptions = {
       },
       clientId: process.env.LOGINGOV_CLIENT_ID ?? "",
       acrValues: "http://idmanagement.gov/ns/assurance/ial/1",
-      nonce: "kbyv83qiqz41bgr32xj407d8by3qbyxl9ox8kohs9572u7p78aa",
+      nonce: "12345",
     },
     // ...add more providers here
   ],
