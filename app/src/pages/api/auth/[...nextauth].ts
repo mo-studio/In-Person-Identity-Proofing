@@ -1,5 +1,12 @@
+import crypto from "crypto";
+
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
+
+// Function to generate a secure nonce
+const generateNonce = () => {
+  return crypto.randomBytes(16).toString("base64");
+};
 
 export const authOptions = {
   providers: [
@@ -20,6 +27,7 @@ export const authOptions = {
       clientId: process.env.LOGINGOV_CLIENT_ID ?? "",
       acrValues: "http://idmanagement.gov/ns/assurance/ial/1",
       nonce: "12345",
+      nonce: generateNonce(),
     },
     // ...add more providers here
   ],
