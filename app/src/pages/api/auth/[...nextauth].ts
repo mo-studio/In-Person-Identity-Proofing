@@ -1,7 +1,8 @@
 import crypto from "crypto";
 
 import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
+
+// import GitHubProvider from "next-auth/providers/github";
 
 // Function to generate a secure nonce
 const generateNonce = () => {
@@ -10,10 +11,10 @@ const generateNonce = () => {
 
 export const authOptions = {
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID ?? "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
-    }),
+    // GitHubProvider({
+    //   clientId: process.env.GITHUB_CLIENT_ID ?? "",
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
+    // }),
     {
       id: "logingov",
       name: "Login.gov",
