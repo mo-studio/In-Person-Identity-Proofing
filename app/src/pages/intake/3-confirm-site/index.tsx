@@ -1,6 +1,7 @@
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 
 import Link from "next/link";
+import router from "next/router";
 import React, { useContext } from "react";
 
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
@@ -10,15 +11,34 @@ import StepIndicatorStep, {
 
 export default function LocationConfirmationScreen() {
   const contextValue = useContext(IntakeContext);
-  const { intakeData } = contextValue || {
+  const { intakeData, setIntakeData } = contextValue || {
     intakeData: initialIntakeData,
     setIntakeData: (data) => {
       return data;
     },
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(intakeData);
+    e.preventDefault();
+    setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
+    router.push("/intake/4-verify-in-person");
+  };
+
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
+
+  function generateRandomCaseNumber() {
+    const digits = "0123456789";
+    let caseNumber = "";
+
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      caseNumber += digits.charAt(randomIndex);
+    }
+
+    return caseNumber;
+  }
 
   return (
     <div className="page">
@@ -62,6 +82,7 @@ export default function LocationConfirmationScreen() {
                 <button
                   type="button"
                   className="usa-button usa-button--full-width"
+                  onClick={(e) => handleClick(e)}
                 >
                   Continue
                 </button>
