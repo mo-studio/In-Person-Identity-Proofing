@@ -25,7 +25,7 @@ describe("Intake", () => {
       )
     ).toBeVisible();
   });
-
+  /* eslint-disable jest/expect-expect */
   test("Displays Acccordion 1 title and content", () => {
     const title = screen.getByText(/State-Issued ID or VHIC/i);
     const content = screen.queryByText(
@@ -60,4 +60,5 @@ describe("Intake", () => {
     );
     clickAccordionTitleAndCheckContent(title, content);
   });
+  /* eslint-enable jest/expect-expect */
 });

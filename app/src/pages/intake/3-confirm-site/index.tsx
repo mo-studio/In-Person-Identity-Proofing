@@ -23,11 +23,11 @@ export default function LocationConfirmationScreen() {
   ) => {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
+
     try {
       await router.push("/intake/4-verify-in-person");
     } catch (error) {
       console.error("Error navigating:", error);
-      // Handle the error as needed
     }
   };
 
