@@ -18,10 +18,17 @@ export default function LocationConfirmationScreen() {
     },
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
-    router.push("/intake/4-verify-in-person");
+    try {
+      await router.push("/intake/4-verify-in-person");
+    } catch (error) {
+      console.error("Error navigating:", error);
+      // Handle the error as needed
+    }
   };
 
   const { name, address } = intakeData.location.attributes;
