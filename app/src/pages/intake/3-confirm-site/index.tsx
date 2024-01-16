@@ -19,9 +19,10 @@ export default function LocationConfirmationScreen() {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(intakeData);
     e.preventDefault();
-    setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
+    if (!intakeData.caseNumber) {
+      setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
+    }
     router.push("/intake/4-verify-in-person");
   };
 
