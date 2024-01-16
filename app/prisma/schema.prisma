@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Case {
+  id           Int        @id @default(autoincrement())
+  case_number  Int
+  created_at   DateTime   @default(now())
+  expired_at   DateTime?
+  uuid         String     
+  status       CaseStatus
+}
+
+model UserCase {
+  id                Int       @id @default(autoincrement())
+  case_number       Int
+  user_id           Int       @default(autoincrement()) 
+  expired_at        DateTime?
+  proofing_agent_id String  
+}
+
+model ProofingAgent {
+  user_id           Int       @id @default(autoincrement())
+  logingov_id       Int
+  role              String  
+  x_509             Json?
+}
+
+// Define the CaseStatus enum
+enum CaseStatus {
+  EXPIRED
+  SITE_CONFIRMED
+  INPERSON_PROOFED
+  UNCONFIRMED
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
