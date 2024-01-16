@@ -18,14 +18,12 @@ export default function LocationConfirmationScreen() {
     },
   };
 
-  const handleClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
 
     try {
-      await router.push("/intake/4-verify-in-person");
+      router.push("/intake/4-verify-in-person");
     } catch (error) {
       console.error("Error navigating:", error);
     }
@@ -88,7 +86,7 @@ export default function LocationConfirmationScreen() {
                 <button
                   type="button"
                   className="usa-button usa-button--full-width"
-                  onClick={handleClick}
+                  onClick={(e) => handleClick(e)}
                 >
                   Continue
                 </button>
