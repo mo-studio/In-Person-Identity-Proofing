@@ -88,7 +88,7 @@ export default function LocationConfirmationScreen() {
                 <button
                   type="button"
                   className="usa-button usa-button--full-width"
-                  onClick={(e) => handleClick(e)}
+                  onClick={handleClick}
                 >
                   Continue
                 </button>
