@@ -75,9 +75,11 @@ export default function LocationConfirmationScreen() {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
     handleCreateCase();
-    router.push("/intake/4-verify-in-person");
-  };
 
+    router.push("/intake/4-verify-in-person").catch((error) => {
+      console.error("Error navigating:", error);
+    });
+  };
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
 
@@ -135,7 +137,7 @@ export default function LocationConfirmationScreen() {
                 <button
                   type="button"
                   className="usa-button usa-button--full-width"
-                  onClick={(e) => handleClick(e)}
+                  onClick={handleClick}
                 >
                   Continue
                 </button>

@@ -14,7 +14,7 @@ export default function CaseNumberScreen() {
     return result;
   }
   const contextValue = useContext(IntakeContext);
-  const { intakeData, setIntakeData } = contextValue || {
+  const { intakeData } = contextValue || {
     intakeData: initialIntakeData,
     setIntakeData: (data) => {
       return data;
