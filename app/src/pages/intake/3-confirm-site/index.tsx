@@ -1,13 +1,16 @@
+import { PrismaClient } from "@prisma/client";
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 
 import Link from "next/link";
 import router from "next/router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
 import StepIndicatorStep, {
   StepStatus,
 } from "src/components/LoginDesignSystem/step-indicator/step-indicator-step";
+
+// import { createCase } from "../api/cases/create";
 
 export default function LocationConfirmationScreen() {
   const contextValue = useContext(IntakeContext);
@@ -17,11 +20,61 @@ export default function LocationConfirmationScreen() {
       return data;
     },
   };
+  const [caseNumber, setCaseNumber] = useState(0);
+  const [uuid, setUuid] = useState("");
+  const test_uuid = "1234567";
+  const handleCreateCase = async () => {
+    const caseData = {
+      case_number: 123,
+      expired_at: null,
+      uuid: "your-uuid",
+      status: "UNCONFIRMED",
+    };
+
+    try {
+      const response = await fetch("/api/cases/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(caseData),
+      });
+
+      if (response.ok) {
+        const newCase = await response.json();
+        console.log("New case created:", newCase);
+      } else {
+        console.error("Failed to create case");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  // const handleCreateCase = async () => {
+  //   const response =  await fetch("/api/cases/create", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       case_number: parseInt(intakeData.caseNumber, 10),
+  //       uuid: test_uuid,
+  //       status: "SITE_CONFIRMED",
+  //     }),
+  //   });
+
+  //   if (response.ok) {
+  //     const newCase =  response.json();
+  //     console.log("New case created:", newCase);
+  //   } else {
+  //     console.error("Failed to create case");
+  //   }
+  // };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(intakeData);
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
+    handleCreateCase();
     router.push("/intake/4-verify-in-person");
   };
 
