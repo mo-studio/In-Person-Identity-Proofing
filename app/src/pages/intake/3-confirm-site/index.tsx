@@ -18,24 +18,23 @@ export default function LocationConfirmationScreen() {
       return data;
     },
   };
-  const [caseNumber, setCaseNumber] = useState(0);
-  const [uuid, setUuid] = useState("");
+
   const test_uuid = "1234567";
   const handleCreateCase = async () => {
-    const caseData = {
-      case_number: 123,
-      expired_at: null,
-      uuid: "your-uuid",
-      status: "UNCONFIRMED",
-    };
-
     try {
       const response = await fetch("/api/cases/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(caseData),
+        body: JSON.stringify({
+          caseData: {
+            case_number: parseInt(intakeData.caseNumber, 10),
+            expired_at: null,
+            uuid: "1234",
+            status: "SITE_CONFIRMED",
+          },
+        }),
       });
 
       if (response.ok) {
@@ -48,36 +47,20 @@ export default function LocationConfirmationScreen() {
       console.error("Error:", error);
     }
   };
-  // const handleCreateCase = async () => {
-  //   const response =  await fetch("/api/cases/create", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       case_number: parseInt(intakeData.caseNumber, 10),
-  //       uuid: test_uuid,
-  //       status: "SITE_CONFIRMED",
-  //     }),
-  //   });
-
-  //   if (response.ok) {
-  //     const newCase =  response.json();
-  //     console.log("New case created:", newCase);
-  //   } else {
-  //     console.error("Failed to create case");
-  //   }
-  // };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
-    handleCreateCase();
-
-    router.push("/intake/4-verify-in-person").catch((error) => {
-      console.error("Error navigating:", error);
-    });
   };
+  useEffect(() => {
+    if (intakeData.caseNumber !== "") {
+      handleCreateCase();
+
+      router.push("/intake/4-verify-in-person").catch((error) => {
+        console.error("Error navigating:", error);
+      });
+    }
+  }, [intakeData.caseNumber]);
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
 
