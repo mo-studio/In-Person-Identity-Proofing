@@ -1,4 +1,5 @@
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
+import { generateRandomCaseNumber } from "src/pages/api/CaseNumberGenerator";
 
 import Link from "next/link";
 import router from "next/router";
@@ -28,18 +29,6 @@ export default function LocationConfirmationScreen() {
   };
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
-
-  function generateRandomCaseNumber() {
-    const digits = "0123456789";
-    let caseNumber = "";
-
-    for (let i = 0; i < 8; i++) {
-      const randomIndex = Math.floor(Math.random() * digits.length);
-      caseNumber += digits.charAt(randomIndex);
-    }
-
-    return caseNumber;
-  }
 
   return (
     <div className="page">
