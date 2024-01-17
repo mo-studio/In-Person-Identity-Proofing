@@ -3,14 +3,12 @@ import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 
 import Link from "next/link";
 import router from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
 import StepIndicatorStep, {
   StepStatus,
 } from "src/components/LoginDesignSystem/step-indicator/step-indicator-step";
-
-// import { createCase } from "../api/cases/create";
 
 export default function LocationConfirmationScreen() {
   const contextValue = useContext(IntakeContext);
