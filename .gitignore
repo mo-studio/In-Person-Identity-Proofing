@@ -2,3 +2,6 @@
 .DS_Store
 # Developer-specific IDE settings
 .vscode
+
+node_modules
+
