@@ -31,7 +31,8 @@ const Home: NextPage = () => {
               </div>
             </Grid>
           </Grid>
-
+          <a href="api/auth/google">Login with Google</a> <br />
+          <a href="api/auth/github">Login with Github</a>
           <Grid row>
             <Grid tablet={{ col: true }}>
               <Link href="/intake/1-home">
