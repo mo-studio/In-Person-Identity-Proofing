@@ -67,4 +67,9 @@ function IntakeContextProvider({ children }: Props) {
   );
 }
 
-export { IntakeContextProvider, IntakeContext, initialIntakeData };
+export {
+  IntakeContextProvider,
+  IntakeContext,
+  initialIntakeData,
+  type IIntakeData,
+};

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { caseData } = req.body;
-
+    debugger;
     try {
       const newCase = await prisma.case.create({
         data: caseData,

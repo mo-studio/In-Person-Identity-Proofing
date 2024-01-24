@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
+import { generateRandomCaseNumber } from "src/pages/api/cases/NumberGenerator";
 
 import Link from "next/link";
 import router from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
 import StepIndicatorStep, {
@@ -21,12 +22,10 @@ export default function LocationConfirmationScreen() {
 
   const handleCreateCase = async () => {
     try {
-      // Check if a case with the current case number already exists
       if (intakeData.caseCreated) {
-        console.log("Case has already been created.");
         return;
       }
-
+      // TODO: Ensure that UUID is passed not hard coded
       const response = await fetch("/api/cases/create", {
         method: "POST",
         headers: {
@@ -44,9 +43,7 @@ export default function LocationConfirmationScreen() {
 
       if (response.ok) {
         const newCase = await response.json();
-        console.log("New case created:", newCase);
 
-        // Mark that the case has been created to avoid duplicates
         setIntakeData({ ...intakeData, caseCreated: true });
       } else {
         console.error("Failed to create case");
@@ -72,18 +69,6 @@ export default function LocationConfirmationScreen() {
   }, [intakeData.caseNumber, intakeData.caseCreated]);
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
-
-  function generateRandomCaseNumber() {
-    const digits = "0123456789";
-    let caseNumber = "";
-
-    for (let i = 0; i < 8; i++) {
-      const randomIndex = Math.floor(Math.random() * digits.length);
-      caseNumber += digits.charAt(randomIndex);
-    }
-
-    return caseNumber;
-  }
 
   return (
     <div className="page">
