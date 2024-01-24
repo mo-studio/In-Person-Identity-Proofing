@@ -19,9 +19,14 @@ export default function LocationConfirmationScreen() {
     },
   };
 
-  const test_uuid = "1234567";
   const handleCreateCase = async () => {
     try {
+      // Check if a case with the current case number already exists
+      if (intakeData.caseCreated) {
+        console.log("Case has already been created.");
+        return;
+      }
+
       const response = await fetch("/api/cases/create", {
         method: "POST",
         headers: {
@@ -40,6 +45,9 @@ export default function LocationConfirmationScreen() {
       if (response.ok) {
         const newCase = await response.json();
         console.log("New case created:", newCase);
+
+        // Mark that the case has been created to avoid duplicates
+        setIntakeData({ ...intakeData, caseCreated: true });
       } else {
         console.error("Failed to create case");
       }
@@ -52,6 +60,7 @@ export default function LocationConfirmationScreen() {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
   };
+
   useEffect(() => {
     if (intakeData.caseNumber !== "") {
       handleCreateCase();
@@ -60,7 +69,7 @@ export default function LocationConfirmationScreen() {
         console.error("Error navigating:", error);
       });
     }
-  }, [intakeData.caseNumber]);
+  }, [intakeData.caseNumber, intakeData.caseCreated]);
   const { name, address } = intakeData.location.attributes;
   const { address1, city, state, zip } = address.physical;
 
