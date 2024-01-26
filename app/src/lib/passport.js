@@ -2,6 +2,41 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { Strategy as OIDCStrategy } from "passport-openidconnect";
+
+// Most of the configuration values live in the /.well-known/openid-configuration JSON:
+// https://idp.int.identitysandbox.gov/.well-known/openid-configuration
+// NOTE: this is just for sandbox, the production values are different
+passport.use(
+  "login-gov",
+  new OIDCStrategy(
+    {
+      issuer: process.env.LOGINGOV_ISSUER,
+      authorizationURL: process.env.LOGINGOV_AUTHORIZATION_URL,
+      tokenURL: `${process.env.LOGINGOV_OIDC_API_URL}/token`,
+      userInfoURL: `${process.env.LOGINGOV_OIDC_API_URL}/userinfo`,
+      clientID: process.env.LOGINGOV_CLIENT_ID,
+      // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.LOGINGOV_CALLBACK_URL,
+      scope: "openid profile email",
+      passReqToCallback: true,
+    },
+    async (issuer, sub, profile, accessToken, refreshToken, done) => {
+      console.log("accessToken", accessToken);
+      console.log("refreshToken", refreshToken);
+      console.log("profile", profile);
+      return done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 
 passport.use(
   "github",
