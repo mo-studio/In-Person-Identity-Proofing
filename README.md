@@ -1,6 +1,7 @@
 # In Person Identity Proofing
-Veterans Affairs (VA) continues to offer more digital services to ensure access and security for all Veterans. In order to achieve increased security measures for VA.gov, Veterans will need to  create modern credentials, such as Login.gov, which require verification of one’s identity. However, the process of remote identity verification can be very confusing and frustrating, and it has a high chance of failure. Through discovery research and literature review, Login.gov Adoption has identified that in-person support is not only desired by Veterans, but it is needed to help many subpopulations of Veterans to verify their identity successfully. For example, Veterans that are not comfortable with processes involving photographing and uploading a digital image. Currently, VA has sites set up so that Veterans may verify their identity for specific services, such as MHV premium. However, the process of identity verification has been found to be inconsistent and unregulated across sites. Login.gov has developed identity proofing services at United States Postal Service sites which are made available to those who have failed remote proofing.
-In order to support Veterans who may be unable to verify their identity remotely, Office of the Chief Technology Officer has tasked the Login.gov Adoption team with creating a custom service that meets NIST Identity Assurance Level 2 (IAL2) guidelines, 800-63, and enables Veterans to complete identity verification in person at VA facilities. The service consists of an In-Person Identity Proofing custom application and an appointment at a VAMC with a designated proofing agent. The custom application is a new product that will allow proofing agents to validate proofing documents and use the Identity Toolkit to help Veterans complete identity verification at VA sites. Login.gov Adoption is a team within OCTO Identity and is working in partnership with Login.gov. 
+
+Veterans Affairs (VA) continues to offer more digital services to ensure access and security for all Veterans. In order to achieve increased security measures for VA.gov, Veterans will need to create modern credentials, such as Login.gov, which require verification of one’s identity. However, the process of remote identity verification can be very confusing and frustrating, and it has a high chance of failure. Through discovery research and literature review, Login.gov Adoption has identified that in-person support is not only desired by Veterans, but it is needed to help many subpopulations of Veterans to verify their identity successfully. For example, Veterans that are not comfortable with processes involving photographing and uploading a digital image. Currently, VA has sites set up so that Veterans may verify their identity for specific services, such as MHV premium. However, the process of identity verification has been found to be inconsistent and unregulated across sites. Login.gov has developed identity proofing services at United States Postal Service sites which are made available to those who have failed remote proofing.
+In order to support Veterans who may be unable to verify their identity remotely, Office of the Chief Technology Officer has tasked the Login.gov Adoption team with creating a custom service that meets NIST Identity Assurance Level 2 (IAL2) guidelines, 800-63, and enables Veterans to complete identity verification in person at VA facilities. The service consists of an In-Person Identity Proofing custom application and an appointment at a VAMC with a designated proofing agent. The custom application is a new product that will allow proofing agents to validate proofing documents and use the Identity Toolkit to help Veterans complete identity verification at VA sites. Login.gov Adoption is a team within OCTO Identity and is working in partnership with Login.gov.
 
 Here is our [Product Brief](https://docs.google.com/document/d/1cQsrpAyydrElCxMk54TbRYmYuyyeJWx98KRWDUbshow/edit#heading=h.e0941y4fa3eg) for more info.
 
@@ -25,8 +26,7 @@ Here is our [Product Brief](https://docs.google.com/document/d/1cQsrpAyydrElCxMk
 
 - Current web application encompasses a Veteran Intake and a Proofing Agent Flow which can be accessed via a screen
 - Veteran Intake flow has 4 screens (if curious you can access here - https://va-in-person-identity-proofing-my-team-223685c3.vercel.app/intake/1-home)
-- Proofing Agent flow enables a MHV coordinator to prove a veterans identity to achieve IAL2 compliance with instructions (see here https://va-in-person-identity-proofing-my-team-223685c3.vercel.app/intake/1-home) 
-
+- Proofing Agent flow enables a MHV coordinator to prove a veterans identity to achieve IAL2 compliance with instructions (see here https://va-in-person-identity-proofing-my-team-223685c3.vercel.app/intake/1-home)
 
 ## Table of Contents
 
@@ -38,10 +38,13 @@ Here is our [Product Brief](https://docs.google.com/document/d/1cQsrpAyydrElCxMk
 - [License](#license)
 
 ## Installation
+
 Clone the github repository:
-   ```bash
-   git clone git@github.com:department-of-veterans-affairs/va-in-person-identity-proofing.git
-   ```
+
+```bash
+git clone git@github.com:department-of-veterans-affairs/va-in-person-identity-proofing.git
+```
+
 #### Native
 
 From the `app/` directory:
@@ -61,14 +64,19 @@ From the `app/` directory:
 4. Navigate to [localhost:3000](http://localhost:3000) to view the application
 
 #### Run Jest Unit Tests
-   ```bash
-   npm run test 
-   ```
+
+```bash
+npm run test
+```
+
 ## Usage
 
-Localhost:3000 should lead you to this screen 
+Localhost:3000 should lead you to this screen
 ![image](https://github.com/department-of-veterans-affairs/va-in-person-identity-proofing/assets/137448668/6d188983-f471-416a-83ef-c35b44e9c37f)
 
+## DB Setup
+
+[Here's some instructions](/docs/prisma-postgres-setup.md) on how to setup a local Postgres DB and connect it to the application with Prisma.
 
 ## Features
 
@@ -81,8 +89,8 @@ Localhost:3000 should lead you to this screen
 
 - Google Maps API
 - Jest
-- LHDI
-- NextAuth/ Login.giv
+- VA.gov Lighthouse Delivery Infrastructure (LHDI)
+- Login.gov (using Passport.js & OpenIDConnect)
 
 ## Contributing
 
