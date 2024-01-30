@@ -32,6 +32,8 @@ const Home: NextPage = () => {
             </Grid>
           </Grid>
           <a href="api/auth/logingov">Login with Login.gov</a> <br />
+          <a href="api/auth/github">Login with Github</a> <br />
+          <a href="api/auth/google">Login with Google</a> <br />
           <Grid row>
             <Grid tablet={{ col: true }}>
               <Link href="/intake/1-home">

@@ -10,8 +10,10 @@ function handler(req, res) {
       "login-gov",
       {
         scope: ["email"],
+        state: "abcdefghijklmnopabcdefghijklmnop",
       },
       (err, user, info, status) => {
+        console.log("err", err);
         if (err) {
           reject(err);
         } else {

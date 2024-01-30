@@ -1,14 +1,15 @@
 import passport from "passport";
 
+import { withIronSession } from "next-iron-session";
+
 import "../../../../lib/passport";
 
-export default function (req, res) {
+function handler(req, res) {
   return new Promise((resolve, reject) => {
     passport.authenticate(
       "login-gov",
       {
         scope: ["profile", "email"],
-        session: false,
       },
       (err, user, info, status) => {
         if (err) {
@@ -27,3 +28,11 @@ export default function (req, res) {
     });
   });
 }
+
+export default withIronSession(handler, {
+  password: process.env.SECRET_COOKIE_PASSWORD,
+  cookieName: "login-gov-session",
+  cookieOptions: {
+    secure: process.env.NODE_ENV === "production",
+  },
+});

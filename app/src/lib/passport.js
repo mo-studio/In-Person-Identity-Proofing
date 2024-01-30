@@ -16,43 +16,44 @@ const generateNonce = () => {
   return nonce;
 };
 
-passport.use;
 // Most of the configuration values live in the /.well-known/openid-configuration JSON:
 // https://idp.int.identitysandbox.gov/.well-known/openid-configuration
 // NOTE: this is just for sandbox, the production values are different
-passport.use(
-  "login-gov",
-  new OIDCStrategy(
-    {
-      issuer: process.env.LOGINGOV_ISSUER,
-      authorizationURL: process.env.LOGINGOV_AUTHORIZATION_URL,
-      tokenURL: `${process.env.LOGINGOV_OIDC_API_URL}/token`,
-      userInfoURL: `${process.env.LOGINGOV_OIDC_API_URL}/userinfo`,
-      clientID: process.env.LOGINGOV_CLIENT_ID,
-      // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.LOGINGOV_CALLBACK_URL,
-      scope: "openid+email",
-      passReqToCallback: true,
-      authorizationParams: {
-        acr_values: "http://idmanagement.gov/ns/assurance/ial/1",
-        nonce: generateNonce(),
-      },
-
-      // TODO
-      // Redirect uri redirect_uri does not match registered redirect_uri
-      // Acr values Please fill in this field.
-      // Nonce Please fill in this field.
-      // Nonce is too short (minimum is 22 characters)
-      // Acr values No acceptable acr_values found
+const logingovStrategy = new OIDCStrategy(
+  {
+    issuer: process.env.LOGINGOV_ISSUER,
+    authorizationURL: process.env.LOGINGOV_AUTHORIZATION_URL,
+    tokenURL: `${process.env.LOGINGOV_OIDC_API_URL}/token`,
+    userInfoURL: `${process.env.LOGINGOV_OIDC_API_URL}/userinfo`,
+    clientID: process.env.LOGINGOV_CLIENT_ID,
+    // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.LOGINGOV_CALLBACK_URL,
+    scope: "openid",
+    passReqToCallback: true,
+    acrValues: "http://idmanagement.gov/ns/assurance/ial/1",
+    nonce: "tS/QaMZV7/IeSQ8X+IVhD05o8V2c5Q==",
+    // store: "abcdefghijklmnopabcdefghijklmnop",
+    authorizationParams: {
+      nonce: "tS/QaMZV7/IeSQ8X+IVhD05o8V2c5Q==",
     },
-    async function verify(issuer, profile, cb) {
-      console.log("issuer", issuer);
-      console.log("profile", profile);
+    // nonce: generateNonce(),
 
-      return cb(null, profile);
-    }
-  )
+    // TODO
+    // Redirect uri redirect_uri does not match registered redirect_uri
+    // Acr values Please fill in this field.
+    // Nonce Please fill in this field.
+    // Nonce is too short (minimum is 22 characters)
+    // Acr values No acceptable acr_values found
+  },
+  async function verify(issuer, profile, cb) {
+    console.log("issuer", issuer);
+    console.log("profile", profile);
+
+    return cb(null, profile);
+  }
 );
+console.log("logingovStrategy", logingovStrategy);
+passport.use("login-gov", logingovStrategy);
 
 passport.serializeUser((user, done) => {
   done(null, user);
