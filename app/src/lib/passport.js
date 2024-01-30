@@ -1,9 +1,22 @@
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import { Strategy as OpenIDStrategy } from "openid-client";
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { Strategy as OIDCStrategy } from "passport-openidconnect";
 
+const { generators } = require("openid-client");
+passport.initialize();
+// Function to generate a secure nonce
+const generateNonce = () => {
+  let nonce = crypto.randomBytes(22).toString("base64");
+  console.log("nonce", nonce);
+  console.log("nonce", nonce.length);
+  return nonce;
+};
+
+passport.use;
 // Most of the configuration values live in the /.well-known/openid-configuration JSON:
 // https://idp.int.identitysandbox.gov/.well-known/openid-configuration
 // NOTE: this is just for sandbox, the production values are different
@@ -18,14 +31,25 @@ passport.use(
       clientID: process.env.LOGINGOV_CLIENT_ID,
       // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.LOGINGOV_CALLBACK_URL,
-      scope: "openid profile email",
+      scope: "openid+email",
       passReqToCallback: true,
+      authorizationParams: {
+        acr_values: "http://idmanagement.gov/ns/assurance/ial/1",
+        nonce: generateNonce(),
+      },
+
+      // TODO
+      // Redirect uri redirect_uri does not match registered redirect_uri
+      // Acr values Please fill in this field.
+      // Nonce Please fill in this field.
+      // Nonce is too short (minimum is 22 characters)
+      // Acr values No acceptable acr_values found
     },
-    async (issuer, sub, profile, accessToken, refreshToken, done) => {
-      console.log("accessToken", accessToken);
-      console.log("refreshToken", refreshToken);
+    async function verify(issuer, profile, cb) {
+      console.log("issuer", issuer);
       console.log("profile", profile);
-      return done(null, profile);
+
+      return cb(null, profile);
     }
   )
 );

@@ -4,11 +4,13 @@ import { withIronSession } from "next-iron-session";
 
 import "../../../../lib/passport";
 
-async function handler(req, res) {
+function handler(req, res) {
   return new Promise((resolve, reject) => {
     passport.authenticate(
       "login-gov",
-      { scope: ["user:email"] },
+      {
+        scope: ["email"],
+      },
       (err, user, info, status) => {
         if (err) {
           reject(err);
