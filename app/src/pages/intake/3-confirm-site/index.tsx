@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 import { generateRandomCaseNumber } from "src/pages/api/cases/NumberGenerator";
 
 import Link from "next/link";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
@@ -57,11 +56,12 @@ export default function LocationConfirmationScreen() {
     e.preventDefault();
     setIntakeData({ ...intakeData, caseNumber: generateRandomCaseNumber() });
   };
-
+  const router = useRouter();
   useEffect(() => {
     if (intakeData.caseNumber !== "") {
       handleCreateCase();
 
+      // Use the router object from useRouter instead of direct import
       router.push("/intake/4-verify-in-person").catch((error) => {
         console.error("Error navigating:", error);
       });
