@@ -1,3 +1,7 @@
+import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
+
+import { useContext } from "react";
+
 import StepIndicator from "src/components/LoginDesignSystem/step-indicator/step-indicator";
 import StepIndicatorStep, {
   StepStatus,
@@ -9,7 +13,13 @@ export default function CaseNumberScreen() {
     result.setDate(result.getDate() + days);
     return result;
   }
-
+  const contextValue = useContext(IntakeContext);
+  const { intakeData } = contextValue || {
+    intakeData: initialIntakeData,
+    setIntakeData: (data) => {
+      return data;
+    },
+  };
   const currentDate = new Date();
   const newDate = addDays(currentDate, 10);
   const date = newDate.toLocaleDateString();
@@ -35,7 +45,7 @@ export default function CaseNumberScreen() {
           </StepIndicator>
           <h1 className="padding-x-0">Verify In Person</h1>
           <p>
-            <b>Your case number is: C8302023</b>
+            <b>Your case number is: {intakeData.caseNumber}</b>
           </p>
           <p className="margin-y-4">
             For your In-Person Identity Proofing walk-in appointment, please
