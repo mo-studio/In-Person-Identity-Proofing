@@ -2,6 +2,16 @@ import { render, screen } from "@testing-library/react";
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 import LocationConfirmationScreen from "src/pages/intake/3-confirm-site/index";
 
+import { NextRouter, useRouter } from "next/router";
+
+const mockRouter: Partial<NextRouter> = {
+  push: jest.fn(),
+};
+
+jest.mock("next/router", () => ({
+  useRouter: () => mockRouter,
+}));
+
 describe("LocationConfirmationScreen", () => {
   it("Displays Continue button and other screen content", () => {
     render(<LocationConfirmationScreen />);
