@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { initialIntakeData, IntakeContext } from "src/contexts/IntakeContext";
 import LocationConfirmationScreen from "src/pages/intake/3-confirm-site/index";
 
-import { NextRouter, useRouter } from "next/router";
+import { NextRouter } from "next/router";
 
 const mockRouter: Partial<NextRouter> = {
   push: jest.fn(),
